@@ -147,7 +147,15 @@ void Image::flipHorizontal()
 
 void Image::flipVertically()
 {
-
+    for(int x = 0;  x<w ; x++)    //x axis
+    {
+        for(int y = 0; y < h/2 ; y++)  //y axis
+        {
+            swap(this->pixels[(x+y*w)].r,this->pixels[x+(h-1-y)*w].r);
+            swap(this->pixels[(x+y*w)].g,this->pixels[x+(h-1-y)*w].g);
+            swap(this->pixels[(x+y*w)].b,this->pixels[x+(h-1-y)*w].b);
+        }
+    }
 }
 
 void Image::AdditionalFunction2()
