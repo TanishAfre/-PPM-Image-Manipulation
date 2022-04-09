@@ -1,5 +1,6 @@
 //
 // Created by floodd on 23/03/2022.
+// Tanish Afre
 //
 #include <iostream>
 #include <fstream>
@@ -44,8 +45,27 @@ bool Image::load(string filename)
     }
     return false;
 }
+//Gamma encoding
 bool Image::loadRaw(string filename)
 {
+    ifstream in(filename);
+    if(in.good())
+    {
+        in >> w;
+        in >> h;
+
+        for(int i = 0; i < w*h; i++)
+        {
+            float r, g, b;
+            in >> r >>g>>b;
+            this->pixels[i].r = (unsigned char) (r *255);
+            this->pixels[i].g = (unsigned char) (g *255);
+            this->pixels[i].b = (unsigned char) (b *255);
+            cout << r << this->pixels[i].r<< endl;
+        }
+        in.close();
+        return true;
+    }
     return false;
 }
 bool Image::savePPM(string filename)
