@@ -45,6 +45,7 @@ bool Image::load(string filename)
     }
     return false;
 }
+
 //Gamma encoding
 bool Image::loadRaw(string filename)
 {
@@ -68,6 +69,7 @@ bool Image::loadRaw(string filename)
     }
     return false;
 }
+
 bool Image::savePPM(string filename)
 {
     if (this->w == 0 || this->h == 0) {return false;}
@@ -94,7 +96,6 @@ bool Image::savePPM(string filename)
     return false;
 }
 
-
 void Image::filterRed()
 {
     for (int i = 0; i < this->w * this->h; ++i) {
@@ -102,6 +103,7 @@ void Image::filterRed()
         this->pixels[i].b = 0;
     }
 }
+
 void Image::filterGreen()
 {
     for (int i = 0; i < this->w * this->h; ++i) {
@@ -109,6 +111,7 @@ void Image::filterGreen()
         this->pixels[i].b = 0;
     }
 }
+
 void Image::filterBlue()
 {
     for (int i = 0; i < this->w * this->h; ++i) {
@@ -116,13 +119,21 @@ void Image::filterBlue()
         this->pixels[i].r = 0;
     }
 }
+
 void Image::greyScale()
 {
-
+    for(int r = 0; r < h; r++)
+    {
+        for(int c = 0;  c< w;c++)
+        {
+            int num = (this->pixels[r*w+c].r + this->pixels[r*w+c].g+this->pixels[r*w+c].b)/3;
+            this->pixels[r*w+c].r=this->pixels[r*w+c].g=this->pixels[r*w+c].b=num;
+        }
+    }
 }
+
 void Image::flipHorizontal()
 {
-
 
 }
 void Image::flipVertically()
