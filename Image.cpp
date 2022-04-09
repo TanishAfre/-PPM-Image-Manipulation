@@ -148,8 +148,8 @@ void Image::flipHorizontal()
 void Image::flipVertically()
 {
 
-
 }
+
 void Image::AdditionalFunction2()
 {
 
