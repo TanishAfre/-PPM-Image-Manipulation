@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cstring>
+#include <cmath>
 #include "Image.h"
 
 
@@ -59,10 +60,9 @@ bool Image::loadRaw(string filename)
         {
             float r, g, b;
             in >> r >>g>>b;
-            this->pixels[i].r = (unsigned char) (r *255);
-            this->pixels[i].g = (unsigned char) (g *255);
-            this->pixels[i].b = (unsigned char) (b *255);
-            cout << r << this->pixels[i].r<< endl;
+            this->pixels[i].r = (unsigned char)(std::max(0.f, std::min(255.f, powf(r, 1/2.2) * 255 + 0.5f)));
+            this->pixels[i].g = (unsigned char)(std::max(0.f, std::min(255.f, powf(g, 1/2.2) * 255 + 0.5f)));
+            this->pixels[i].b = (unsigned char)(std::max(0.f, std::min(255.f, powf(b, 1/2.2) * 255 + 0.5f)));
         }
         in.close();
         return true;
@@ -166,9 +166,28 @@ void Image::AdditionalFunction3()
 {
 
 }
-void Image::AdditionalFunction1()
+void Image::AdditionalFunction1(int cx, int cy, int newW, int newH)
 {
+//crop image too see marvel illuminati
+        Image *cropImage = new Image(newW,newH);
+        for(int y=0;y<newH;++y){
+            if((y+cy)>h){
+                break;
+            }
+            for(int x=0;x<newW;x++){
+                if((x+cx)>w){
+                    break;
+                }
+                std::memcpy(&cropImage->pixels[(x+y*newW)],&this->pixels[(x+cx+(cy+y)*w)],3);
+            }
+        }
 
+        w = newW;
+        h = newH;
+
+        delete[] this->pixels;
+        this->pixels = cropImage->pixels;
+        cropImage = nullptr;
 }
 
 /* Functions used by the GUI - DO NOT MODIFY */
