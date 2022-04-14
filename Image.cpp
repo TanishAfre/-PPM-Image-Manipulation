@@ -157,37 +157,45 @@ void Image::flipVertically()
         }
     }
 }
-
+// Feature 2 :
+//            Inverting the image colors
 void Image::AdditionalFunction2()
 {
-
+    int totalPixels = w*h;
+    for(int i=0;i<totalPixels;i++){
+        this->pixels[i].r = 255 - (int)this->pixels[i].r;
+        this->pixels[i].g = 255 - (int)this->pixels[i].g;
+        this->pixels[i].b = 255 - (int)this->pixels[i].b;
+    }
 }
 void Image::AdditionalFunction3()
 {
 
 }
+
+// Feature 1 :
+//            Crop image too see marvel illuminati
 void Image::AdditionalFunction1(int cx, int cy, int newW, int newH)
 {
-//crop image too see marvel illuminati
-        Image *cropImage = new Image(newW,newH);
-        for(int y=0;y<newH;++y){
-            if((y+cy)>h){
+    Image *cropImage = new Image(newW,newH);
+    for(int y=0;y<newH;++y){
+        if((y+cy)>h){
+            break;
+        }
+        for(int x=0;x<newW;x++){
+            if((x+cx)>w){
                 break;
             }
-            for(int x=0;x<newW;x++){
-                if((x+cx)>w){
-                    break;
-                }
-                std::memcpy(&cropImage->pixels[(x+y*newW)],&this->pixels[(x+cx+(cy+y)*w)],3);
-            }
+            std::memcpy(&cropImage->pixels[(x+y*newW)],&this->pixels[(x+cx+(cy+y)*w)],3);
         }
+    }
 
-        w = newW;
-        h = newH;
+    w = newW;
+    h = newH;
 
-        delete[] this->pixels;
-        this->pixels = cropImage->pixels;
-        cropImage = nullptr;
+    delete[] this->pixels;
+    this->pixels = cropImage->pixels;
+    cropImage = nullptr;
 }
 
 /* Functions used by the GUI - DO NOT MODIFY */
