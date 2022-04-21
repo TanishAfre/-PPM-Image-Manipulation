@@ -168,9 +168,35 @@ void Image::AdditionalFunction2()
         this->pixels[i].b = 255 - (int)this->pixels[i].b;
     }
 }
+
+// Feature 3 :
+//            Image Blur
 void Image::AdditionalFunction3()
 {
-
+    for(int x = 0; x < h; ++x)
+    {
+        for(int y = 0; y < w; ++y)
+        {
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+            for(int i = -1; i <= 1; ++i)
+            {
+                for(int j = -1; j <= 1; ++j)
+                {
+                    if(x + i >= 0 && x + i < h && y + j >= 0 && y + j < w)
+                    {
+                        red += pixels[(x + i) * w + (y + j)].r;
+                        green += pixels[(x + i) * w + (y + j)].g;
+                        blue += pixels[(x + i) * w + (y + j)].b;
+                    }
+                }
+            }
+            pixels[x * w + y].r = red / 10;
+            pixels[x * w + y].g = green / 10;
+            pixels[x * w + y].b = blue / 10;
+        }
+    }
 }
 
 // Feature 1 :
