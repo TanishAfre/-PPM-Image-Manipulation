@@ -50,6 +50,7 @@ public:
     void AdditionalFunction1(int x, int y, int newWidth, int newHeight);
     void AdditionalFunction2();
     void AdditionalFunction3();
+    void AdvancedFeature();
 
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();

@@ -192,9 +192,9 @@ void Image::AdditionalFunction3()
                     }
                 }
             }
-            pixels[x * w + y].r = red / 10;
-            pixels[x * w + y].g = green / 10;
-            pixels[x * w + y].b = blue / 10;
+            pixels[x * w + y].r = red / 9;
+            pixels[x * w + y].g = green / 9;
+            pixels[x * w + y].b = blue / 9;
         }
     }
 }
@@ -223,6 +223,27 @@ void Image::AdditionalFunction1(int cx, int cy, int newW, int newH)
     this->pixels = cropImage->pixels;
     cropImage = nullptr;
 }
+
+void Image::AdvancedFeature(){
+
+    Image *rotImage = new Image(h,w);
+
+    for(int x = 0;  x< w;x++)    //x axis
+    {
+        for(int y = 0; y < h;y++)  //y axis
+        {
+            int offset = h * x + y;
+            rotImage->pixels[offset] = this->pixels[w * (h - 1 - y) + x];
+        }
+    }
+    swap(w,h);
+    delete[] this->pixels;
+    this->pixels = rotImage->pixels;
+    rotImage = nullptr;
+}
+
+
+
 
 /* Functions used by the GUI - DO NOT MODIFY */
 int Image::getWidth()
